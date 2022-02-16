@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Антон Трубецкой](https://up.htmlacademy.ru/javascript/25/user/832259).
-
+* Наставник: [Илья Саранчев](https://htmlacademy.ru/profile/id1093499).
 
 ---
 
