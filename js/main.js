@@ -2,7 +2,7 @@
 
 const getRandomInt = (min, max) => {
   const rand = min + Math.random() * (max - min);
-  if(max > min) {
+  if (max > min) {
     return Math.round(rand);
   } else if (max < min || max === min) {
     return 'Недопустимое значение';
