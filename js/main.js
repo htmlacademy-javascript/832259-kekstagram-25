@@ -1,18 +1,26 @@
 //Первую функцию взял из ссылки и доработал :) https://learn.javascript.ru/task/random-int-min-max
 
 const getRandomInt = (min, max) => {
-  const rand = min + Math.random() * (max - min);
-  if (max > min) {
-    return Math.round(rand);
-  } else if (max < min || max === min) {
-    return 'Недопустимое значение';
+  if(max < min || max === min) {
+    throw new Error('Данное зачение использоваться не может.');
   }
+
+  if (min < -1) {
+    throw new Error('Значение не может быть меньше 0.');
+  }
+
+  const rand = min + Math.random() * (max - min);
+
+  return Math.round(rand);
 };
 
 const checkStringLength = (str, length) => {
-  const stringLength = str.length <= length ? 'Длина прошла проверку' : 'Длина не прошла проверку';
-  return stringLength;
+  if(str.length <= length) {
+    return true;
+  }
+
+  return false;
 };
 
-getRandomInt(20, 20);
-checkStringLength('fffffff', 6);
+getRandomInt(0, 20);
+console.log(checkStringLength('ffffjjjjjjjjjjjjjjjjjfff', 30));
