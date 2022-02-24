@@ -23,4 +23,4 @@ const checkStringLength = (str, length) => {
 };
 
 getRandomInt(0, 20);
-console.log(checkStringLength('ffffjjjjjjjjjjjjjjjjjfff', 30));
+checkStringLength('ffffjjjjjjjjjjjjjjjjjfff', 30);
