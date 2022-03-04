@@ -57,9 +57,9 @@ const getNonRepeatingInt = (min, max) => {
   throw new Error ('Не удалось сгенерировать число');
 };
 
-const getRandomArrayElement = (number) => {
-  const random = Math.floor(Math.random() * number.length);
-  return number[random];
+const getRandomArrayElement = (array) => {
+  const random = Math.floor(Math.random() * array.length);
+  return array[random];
 };
 
 const checkStringLength = (str, length) => {
@@ -79,7 +79,7 @@ const createCommentsList = () => {
       id: getNonRepeatingInt(MIN_VALUE_USER_ID, MAX_VALUE_USER_ID),
       avatar: `img/avatar-${getRandomInt(MIN_VALUE_USER_AVATAR, MAX_VALUE_USER_AVATAR)}.svg`,
       message: getRandomArrayElement(MESSAGES),
-      names: getRandomArrayElement(NAMES)
+      name: getRandomArrayElement(NAMES)
     });
   }
 
