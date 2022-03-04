@@ -1,11 +1,13 @@
-const COUNT = 25;
-const MIN_VALUE = 1;
-const MAX_VALUE_ID = 25;
-const MAX_VALUE_AVATAR = 6;
+const COUNT_DESCRIPTION = 25;
+const COUNT_COMMENT = 2;
+const MIN_VALUE_USER_ID = 1;
+const MAX_VALUE_USER_ID = 50;
+const MIN_VALUE_USER_AVATAR = 1;
+const MAX_VALUE_USER_AVATAR = 6;
 const MIN_VALUE_LIKE = 15;
 const MAX_VALUE_LIKE = 200;
 
-const messages = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -14,7 +16,7 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const names = [
+const NAMES = [
   'Артем',
   'Дмитрий',
   'Андрей',
@@ -36,9 +38,28 @@ const getRandomInt = (min, max) => {
   return Math.round(rand);
 };
 
-const getRandomArrayElement = (num) => {
-  const random = Math.floor(Math.random() * num.length);
-  return num[random];
+const getNonRepeatingInt = (min, max) => {
+  if(getNonRepeatingInt.values === undefined) {
+    getNonRepeatingInt.values = [];
+  }
+
+  let result;
+
+  for (let i = 0; i <= 50; i++) {
+    result = getRandomInt(min, max);
+
+    if(!getNonRepeatingInt.values.includes(result)) {
+      getNonRepeatingInt.values.push(result);
+      return result;
+    }
+  }
+
+  throw new Error ('Не удалось сгенерировать число');
+};
+
+const getRandomArrayElement = (number) => {
+  const random = Math.floor(Math.random() * number.length);
+  return number[random];
 };
 
 const checkStringLength = (str, length) => {
@@ -53,12 +74,12 @@ const checkStringLength = (str, length) => {
 const createCommentsList = () => {
   const commentsList = [];
 
-  for (let i = 0; i <= MIN_VALUE; i++) {
+  for (let i = 1; i <= COUNT_COMMENT; i++) {
     commentsList.push({
-      id: getRandomInt(MIN_VALUE, MAX_VALUE_ID),
-      avatar: `img/avatar-${getRandomInt(MIN_VALUE, MAX_VALUE_AVATAR)}.svg`,
-      message: getRandomArrayElement(messages),
-      names: getRandomArrayElement(names)
+      id: getNonRepeatingInt(MIN_VALUE_USER_ID, MAX_VALUE_USER_ID),
+      avatar: `img/avatar-${getRandomInt(MIN_VALUE_USER_AVATAR, MAX_VALUE_USER_AVATAR)}.svg`,
+      message: getRandomArrayElement(MESSAGES),
+      names: getRandomArrayElement(NAMES)
     });
   }
 
@@ -67,11 +88,11 @@ const createCommentsList = () => {
 
 
 const createPhotoDescription = (amount) => {
-  const photoData = [];
+  const photoDescription = [];
 
   for (let i = 1; i <= amount; i++) {
-    photoData.push({
-      id: getRandomInt(MIN_VALUE, MAX_VALUE_ID),
+    photoDescription.push({
+      id: i,
       url: `photos/${i}.jpg`,
       description: 'Описание фотографии',
       likes: getRandomInt(MIN_VALUE_LIKE, MAX_VALUE_LIKE),
@@ -79,8 +100,8 @@ const createPhotoDescription = (amount) => {
     });
   }
 
-  return photoData;
+  return photoDescription;
 };
 
-createPhotoDescription(COUNT);
+createPhotoDescription(COUNT_DESCRIPTION);
 checkStringLength(1, 2);
