@@ -1,8 +1,6 @@
 import {createCommentsList} from './comments.js';
 import {getRandomInt} from '../util.js';
 
-
-const COUNT_DESCRIPTION = 25;
 const MIN_VALUE_LIKE = 15;
 const MAX_VALUE_LIKE = 200;
 
