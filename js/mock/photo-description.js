@@ -1,5 +1,5 @@
 import {createCommentsList} from './comments.js';
-import {getRandomInt} from './util.js';
+import {getRandomInt} from '../util.js';
 
 
 const COUNT_DESCRIPTION = 25;
@@ -22,4 +22,4 @@ const createPhotoDescription = (amount) => {
   return photoDescription;
 };
 
-createPhotoDescription(COUNT_DESCRIPTION);
+export {createPhotoDescription};

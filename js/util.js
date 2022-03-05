@@ -44,8 +44,7 @@ const checkStringLength = (str, length) => {
   return false;
 };
 
-checkStringLength(1, 2);
-
 export {getRandomInt};
 export {getNonRepeatingInt};
 export {getRandomArrayElement};
+export {checkStringLength};

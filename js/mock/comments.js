@@ -1,10 +1,10 @@
-import {getNonRepeatingInt} from './util.js';
-import {getRandomInt} from './util.js';
-import {getRandomArrayElement} from './util.js';
+import {getNonRepeatingInt} from '../util.js';
+import {getRandomInt} from '../util.js';
+import {getRandomArrayElement} from '../util.js';
 
 const COUNT_COMMENT = 2;
 const MIN_VALUE_USER_ID = 1;
-const MAX_VALUE_USER_ID = 50;
+const MAX_VALUE_USER_ID = 1000;
 const MIN_VALUE_USER_AVATAR = 1;
 const MAX_VALUE_USER_AVATAR = 6;
 
