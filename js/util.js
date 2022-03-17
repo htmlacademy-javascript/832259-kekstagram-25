@@ -44,7 +44,15 @@ const checkStringLength = (str, length) => {
   return false;
 };
 
+const isEnterKey = (evt) => evt.key === 'Enter';
+
+const isEscKey = (evt) => evt.key === 'Escape';
+
+
 export {getRandomInt};
 export {getNonRepeatingInt};
 export {getRandomArrayElement};
 export {checkStringLength};
+export {isEnterKey};
+export {isEscKey};
+
