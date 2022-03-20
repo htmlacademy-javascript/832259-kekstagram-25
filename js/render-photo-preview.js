@@ -1,32 +1,43 @@
-import {openFullSizePhoto} from './full-size-photo-status.js';
+import {openPhotoModal} from './view-photo-modal.js';
+import {createPhotoModal} from './view-photo-modal.js';
 import {isEnterKey} from './util.js';
-import {createFullSizePhoto} from './full-size-photo.js';
+
 const pictureNode = document.querySelector('.pictures');
 const pictureTemplateNode = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const createPhotoPreview = ({url, description, likes, comments}) => {
+const addClickHandler = (previewTemplate, photo) => {
+  previewTemplate.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openPhotoModal(evt);
+    createPhotoModal(photo);
+  });
+};
+
+const addPressEnterHandler = (previewTemplate, photo) => {
+  previewTemplate.addEventListener('keydown', (evt) => {
+    if(!isEnterKey(evt)) {
+      return;
+    }
+
+    openPhotoModal(evt);
+    createPhotoModal(photo);
+  })
+}
+
+const createPhotoPreview = (photo) => {
   const photoPreviewTemplate = pictureTemplateNode.cloneNode(true);
   const imgNode = photoPreviewTemplate.querySelector('.picture__img');
   const likesNode = photoPreviewTemplate.querySelector('.picture__likes');
   const commentsNode = photoPreviewTemplate.querySelector('.picture__comments');
 
-  imgNode.src = url;
-  likesNode.textContent = likes;
-  commentsNode.textContent = comments.length;
+  imgNode.src = photo.url;
+  likesNode.textContent = photo.likes;
+  commentsNode.textContent = photo.comments.length;
 
-  photoPreviewTemplate.addEventListener('click', (evt) => {
-    openFullSizePhoto(evt);
-    createFullSizePhoto({url, description, likes, comments});
-  });
-
-  photoPreviewTemplate.addEventListener('keydown', (evt) => {
-    if(isEnterKey(evt)) {
-      openFullSizePhoto(evt);
-      createFullSizePhoto({url, description, likes, comments});
-    }
-  });
+  addClickHandler(photoPreviewTemplate, photo);
+  addPressEnterHandler(photoPreviewTemplate, photo);
 
   return photoPreviewTemplate;
 };
