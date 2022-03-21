@@ -1,5 +1,5 @@
 import {openPhotoModal} from './view-photo-modal.js';
-import {createPhotoModal} from './view-photo-modal.js';
+import {fillingPhotoModal} from './view-photo-modal.js';
 import {isEnterKey} from './util.js';
 
 const pictureNode = document.querySelector('.pictures');
@@ -10,8 +10,8 @@ const pictureTemplateNode = document.querySelector('#picture')
 function addClickHandler (previewTemplate, photo) {
   previewTemplate.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openPhotoModal(evt);
-    createPhotoModal(photo);
+    openPhotoModal();
+    fillingPhotoModal(photo);
   });
 }
 
@@ -21,8 +21,8 @@ function addPressEnterHandler (previewTemplate, photo) {
       return;
     }
 
-    openPhotoModal(evt);
-    createPhotoModal(photo);
+    openPhotoModal();
+    fillingPhotoModal(photo);
   });
 }
 

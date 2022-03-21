@@ -9,34 +9,39 @@ const imgElementNode = document.querySelector('.big-picture__img img');
 const countLikesNode = document.querySelector('.likes-count');
 const countCommentsNode = document.querySelector('.comments-count');
 const descriptionPhotoNode = document.querySelector('.social__caption');
-const commentsList = document.querySelector('.social__comments');
+const commentsListNode = document.querySelector('.social__comments');
 
-function createCommentsList (comment) {
-  commentsList.innerHTML= '';
-  const arrComments = comment.comments;
+function createCommentsList (photo) {
+  commentsListNode.innerHTML= '';
+
+  const comments = photo.comments;
   const commentsFragment = document.createDocumentFragment();
 
-  arrComments.forEach((comments) => {
+  comments.forEach((comment) => {
     const commentNode = document.createElement('li');
     commentNode.classList.add('social__comment');
     commentNode.innerHTML = `
     <img
         class="social__picture"
-        src="${comments.avatar}"
-        alt="${comments.name}"
+        src="${comment.avatar}"
+        alt="${comment.name}"
         width="35" height="35">
-    <p class="social__text">${comments.message}</p>
   `;
 
+    const userMessageNode = document.createElement('p');
+    userMessageNode.classList.add('social__text');
+    userMessageNode.textContent = comment.message;
+
+    commentNode.appendChild(userMessageNode);
     commentsFragment.appendChild(commentNode);
   });
 
-  commentsList.appendChild(commentsFragment);
+  commentsListNode.appendChild(commentsFragment);
 
   return commentsFragment;
 }
 
-function createPhotoModal (photo) {
+function fillingPhotoModal (photo) {
   imgElementNode.src = photo.url;
   countLikesNode.textContent = photo.likes;
   countCommentsNode.textContent = photo.comments.length;
@@ -59,8 +64,7 @@ function closePhotoModal () {
   document.removeEventListener('keydown', onPhotoModalEscKeydown);
 }
 
-function openPhotoModal (evt) {
-  evt.preventDefault();
+function openPhotoModal () {
 
   bodyNode.classList.add('modal-open');
   photoModalNode.classList.remove('hidden');
@@ -69,14 +73,10 @@ function openPhotoModal (evt) {
 }
 
 userPhotoModalCloseElement.addEventListener('click', closePhotoModal);
-userPhotoModalCloseElement.addEventListener('keydown', (evt) => {
-  if(isEscKey(evt)) {
-    closePhotoModal();
-  }
-});
+
 
 countMoreCommentsNode.classList.add('hidden');
 loadMoreCommentsNode.classList.add('hidden');
 
-export {createPhotoModal};
+export {fillingPhotoModal};
 export {openPhotoModal};
