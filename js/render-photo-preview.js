@@ -7,15 +7,15 @@ const pictureTemplateNode = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const addClickHandler = (previewTemplate, photo) => {
+function addClickHandler (previewTemplate, photo) {
   previewTemplate.addEventListener('click', (evt) => {
     evt.preventDefault();
     openPhotoModal(evt);
     createPhotoModal(photo);
   });
-};
+}
 
-const addPressEnterHandler = (previewTemplate, photo) => {
+function addPressEnterHandler (previewTemplate, photo) {
   previewTemplate.addEventListener('keydown', (evt) => {
     if(!isEnterKey(evt)) {
       return;
@@ -23,10 +23,10 @@ const addPressEnterHandler = (previewTemplate, photo) => {
 
     openPhotoModal(evt);
     createPhotoModal(photo);
-  })
+  });
 }
 
-const createPhotoPreview = (photo) => {
+function createPhotoPreview (photo) {
   const photoPreviewTemplate = pictureTemplateNode.cloneNode(true);
   const imgNode = photoPreviewTemplate.querySelector('.picture__img');
   const likesNode = photoPreviewTemplate.querySelector('.picture__likes');
@@ -40,9 +40,9 @@ const createPhotoPreview = (photo) => {
   addPressEnterHandler(photoPreviewTemplate, photo);
 
   return photoPreviewTemplate;
-};
+}
 
-const renderPhotoPreview = (photos) => {
+function renderPhotoPreview (photos) {
   const photosFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -51,6 +51,6 @@ const renderPhotoPreview = (photos) => {
   });
 
   pictureNode.appendChild(photosFragment);
-};
+}
 
 export {renderPhotoPreview};

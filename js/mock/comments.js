@@ -25,7 +25,7 @@ const NAMES = [
   'Константин'
 ];
 
-const createCommentsList = () => {
+function createCommentsList () {
   const commentsList = [];
 
   for (let i = 1; i <= COUNT_COMMENT; i++) {
@@ -38,6 +38,6 @@ const createCommentsList = () => {
   }
 
   return commentsList;
-};
+}
 
 export {createCommentsList};

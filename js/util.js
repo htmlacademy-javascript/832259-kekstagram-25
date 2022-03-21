@@ -1,4 +1,4 @@
-const getRandomInt = (min, max) => {
+function getRandomInt (min, max) {
   if(max < min || max === min) {
     throw new Error('Данное зачение использоваться не может.');
   }
@@ -10,9 +10,9 @@ const getRandomInt = (min, max) => {
   const rand = min + Math.random() * (max - min);
 
   return Math.round(rand);
-};
+}
 
-const getNonRepeatingInt = (min, max) => {
+function getNonRepeatingInt (min, max) {
   if(getNonRepeatingInt.values === undefined) {
     getNonRepeatingInt.values = [];
   }
@@ -29,24 +29,28 @@ const getNonRepeatingInt = (min, max) => {
   }
 
   throw new Error ('Не удалось сгенерировать число');
-};
+}
 
-const getRandomArrayElement = (array) => {
+function getRandomArrayElement (array) {
   const random = Math.floor(Math.random() * array.length);
   return array[random];
-};
+}
 
-const checkStringLength = (str, length) => {
+function checkStringLength (str, length) {
   if(str.length <= length) {
     return true;
   }
 
   return false;
-};
+}
 
-const isEnterKey = (evt) => evt.key === 'Enter';
+function isEnterKey (evt) {
+  return evt.key === 'Enter';
+}
 
-const isEscKey = (evt) => evt.key === 'Escape';
+function isEscKey (evt) {
+  return evt.key === 'Escape';
+}
 
 
 export {getRandomInt};

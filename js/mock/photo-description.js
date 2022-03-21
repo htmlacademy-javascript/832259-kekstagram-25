@@ -4,7 +4,7 @@ import {getRandomInt} from '../util.js';
 const MIN_VALUE_LIKE = 15;
 const MAX_VALUE_LIKE = 200;
 
-const createPhotoDescription = (amount) => {
+function createPhotoDescription (amount) {
   const photoDescription = [];
 
   for (let i = 1; i <= amount; i++) {
@@ -18,6 +18,6 @@ const createPhotoDescription = (amount) => {
   }
 
   return photoDescription;
-};
+}
 
 export {createPhotoDescription};
