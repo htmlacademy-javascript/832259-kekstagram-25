@@ -71,7 +71,7 @@ hashtagsNode.addEventListener('focusout', () => {
 pristine.addValidator(
   formModalNode.querySelector('.text__hashtags'),
   validateHashtag,
-  'adsad'
+  'Поле невалидно'
 );
 
 formModalNode.addEventListener('submit', (evt) => {
