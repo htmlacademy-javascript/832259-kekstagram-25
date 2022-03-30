@@ -7,7 +7,7 @@ const formModalNode = document.querySelector('.img-upload__form');
 const textDescriptionNode = document.querySelector('.text__description');
 const hashtagsNode = document.querySelector('.text__hashtags');
 
-const regular = /^#[a-zа-яё0-9]{1,19}$/i;
+const regular = /^#[a-zа-яё0-9]+$/i;
 
 const pristine = new Pristine(formModalNode, {
   classTo: 'img-upload__text',
@@ -48,7 +48,7 @@ function validateNonRepeatingHashtags (value) {
   const hashtags = value.trim().toLowerCase().split(/\s+/);
   const validatedHastags = [];
 
-  for (let i = 0; i <= hashtags.length; i++) {
+  for (let i = 0; i < hashtags.length; i++) {
     if (validatedHastags.includes(hashtags[i])) {
       return false;
     }
