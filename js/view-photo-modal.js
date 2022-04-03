@@ -1,20 +1,27 @@
+import {isEnterKey} from './util.js';
 import {isEscKey} from './util.js';
 
 const photoModalNode = document.querySelector('.big-picture');
 const userPhotoModalCloseElement = document.querySelector('.big-picture__cancel');
 const bodyNode = document.querySelector('body');
-const countMoreCommentsNode = document.querySelector('.social__comment-count');
 const loadMoreCommentsNode = document.querySelector('.comments-loader');
 const imgElementNode = document.querySelector('.big-picture__img img');
+const countCommentsPerPageNode = document.querySelector('.comments-count-per-page');
 const countLikesNode = document.querySelector('.likes-count');
 const countCommentsNode = document.querySelector('.comments-count');
 const descriptionPhotoNode = document.querySelector('.social__caption');
 const commentsListNode = document.querySelector('.social__comments');
 
-function createCommentsList (photo) {
-  commentsListNode.innerHTML= '';
+let currentPhoto;
+let commentsCurrentPage = 0;
+const commentsCountPerPage = 5;
 
-  const comments = photo.comments;
+function renderMoreComments () {
+  commentsCurrentPage++;
+
+  const shift = commentsCurrentPage * commentsCountPerPage;
+  const comments = currentPhoto.comments.slice(shift, shift + commentsCountPerPage);
+  countCommentsPerPageNode.textContent = comments.length+=shift;
   const commentsFragment = document.createDocumentFragment();
 
   comments.forEach((comment) => {
@@ -38,16 +45,47 @@ function createCommentsList (photo) {
 
   commentsListNode.appendChild(commentsFragment);
 
-  return commentsFragment;
+  hideLoadMoreComments();
+}
+
+function hideLoadMoreComments () {
+  const maxPages = Math.ceil(currentPhoto.comments.length / commentsCountPerPage);
+
+  if (commentsCurrentPage >= maxPages) {
+    loadMoreCommentsNode.classList.add('hidden');
+  } else {
+    loadMoreCommentsNode.classList.remove('hidden');
+  }
+}
+
+function addClickHandler () {
+  loadMoreCommentsNode.addEventListener('click', () => {
+    renderMoreComments();
+  });
+}
+
+function addPressEnterHandler () {
+  loadMoreCommentsNode.addEventListener('keydown', (evt) => {
+    if (!isEnterKey(evt)) {
+      renderMoreComments();
+    }
+  });
 }
 
 function fillingPhotoModal (photo) {
   imgElementNode.src = photo.url;
   countLikesNode.textContent = photo.likes;
+  commentsListNode.innerHTML= '';
   countCommentsNode.textContent = photo.comments.length;
   descriptionPhotoNode.textContent = photo.description;
+  commentsCurrentPage = -1;
 
-  createCommentsList(photo);
+  currentPhoto = photo;
+
+  renderMoreComments();
+
+  addClickHandler();
+  addPressEnterHandler();
 }
 
 function onPhotoModalEscKeydown (evt) {
@@ -73,10 +111,6 @@ function openPhotoModal () {
 }
 
 userPhotoModalCloseElement.addEventListener('click', closePhotoModal);
-
-
-countMoreCommentsNode.classList.add('hidden');
-loadMoreCommentsNode.classList.add('hidden');
 
 export {fillingPhotoModal};
 export {openPhotoModal};
