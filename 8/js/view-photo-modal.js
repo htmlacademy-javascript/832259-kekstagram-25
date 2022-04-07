@@ -58,19 +58,17 @@ function hideLoadMoreComments () {
   }
 }
 
-function addClickHandler () {
-  loadMoreCommentsNode.addEventListener('click', () => {
-    renderMoreComments();
-  });
-}
 
-function addPressEnterHandler () {
-  loadMoreCommentsNode.addEventListener('keydown', (evt) => {
-    if (!isEnterKey(evt)) {
-      renderMoreComments();
-    }
-  });
-}
+loadMoreCommentsNode.addEventListener('click', () => {
+  renderMoreComments();
+});
+
+
+loadMoreCommentsNode.addEventListener('keydown', (evt) => {
+  if (!isEnterKey(evt)) {
+    renderMoreComments();
+  }
+});
 
 function fillingPhotoModal (photo) {
   imgElementNode.src = photo.url;
@@ -83,9 +81,6 @@ function fillingPhotoModal (photo) {
   currentPhoto = photo;
 
   renderMoreComments();
-
-  addClickHandler();
-  addPressEnterHandler();
 }
 
 function onPhotoModalEscKeydown (evt) {

@@ -12,6 +12,7 @@ function addClickHandler (previewTemplate, photo) {
     evt.preventDefault();
     openPhotoModal();
     fillingPhotoModal(photo);
+
   });
 }
 
