@@ -1,9 +1,47 @@
 const ValuesImageEffects = {
-  chrome: 'chrome',
+  chrome: {
+    min: 0,
+    max: 1,
+    start: 1,
+    step: 0.1,
+    unit: ''
+  },
+  sepia: {
+    min: 0,
+    max: 1,
+    start: 1,
+    step: 0.1,
+    unit: ''
+  },
+  marvin: {
+    min: 1,
+    max: 100,
+    start: 100,
+    step: 1,
+    unit: '%'
+  },
+  phobos: {
+    min: 0,
+    max: 3,
+    start: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  heat: {
+    min: 1,
+    max: 3,
+    start: 3,
+    step: 0.1,
+    unit: ''
+  }
+};
+
+const CssEffectsList = {
+  chrome: 'grayscale',
   sepia: 'sepia',
-  marvin: 'marvin',
-  phobos: 'phobos',
-  heat: 'heat'
+  marvin: 'invert',
+  phobos: 'blur',
+  heat: 'brightness'
 };
 
 const changeEffectsRadioButtonNodes = document.querySelectorAll('.effects__radio');
@@ -49,107 +87,24 @@ noUiSlider.create(sliderEffectIntesityNode, {
 
 changeEffectsRadioButtonNodes.forEach((effectsButton) => {
   effectsButton.addEventListener('change', (evt) => {
-    if (evt.target.value === ValuesImageEffects.chrome) {
-      sliderEffectIntesityNode.noUiSlider.on('update', () => {
-        imageNode.style = `filter: grayscale(${sliderEffectIntesityNode.noUiSlider.get()})`;
-      });
-    }
+    const effect = evt.target.value;
+    const effectParams = ValuesImageEffects[effect];
+    const cssEffect = CssEffectsList[effect];
 
-    if (evt.target.value === ValuesImageEffects.sepia) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
+    sliderEffectIntesityNode.noUiSlider.updateOptions({
+      range: {
+        min: effectParams.min,
+        max: effectParams.max
+      },
+      start: effectParams.start,
+      step: effectParams.step
+    });
 
-      sliderEffectIntesityNode.noUiSlider.on('update', () => {
-        imageNode.style = `filter: sepia(${sliderEffectIntesityNode.noUiSlider.get()})`;
-      });
-    } else if (evt.target.value === ValuesImageEffects.chrome) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-    }
+    const unit = effectParams.unit;
 
-    if (evt.target.value === ValuesImageEffects.marvin) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 100
-        },
-        start: 100,
-        step: 1
-      });
-
-      sliderEffectIntesityNode.noUiSlider.on('update', () => {
-        imageNode.style = `filter: invert(${sliderEffectIntesityNode.noUiSlider.get()}%)`;
-      });
-    }  else if (evt.target.value === ValuesImageEffects.chrome) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-    }
-
-    if (evt.target.value === ValuesImageEffects.phobos) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3
-        },
-        start: 3,
-        step: 0.1
-      });
-
-      sliderEffectIntesityNode.noUiSlider.on('update', () => {
-        imageNode.style = `filter: blur(${sliderEffectIntesityNode.noUiSlider.get()}px)`;
-      });
-    }  else if (evt.target.value === ValuesImageEffects.chrome) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-    }
-
-    if (evt.target.value === ValuesImageEffects.heat) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3
-        },
-        start: 3,
-        step: 0.1
-      });
-
-      sliderEffectIntesityNode.noUiSlider.on('update', () => {
-        imageNode.style = `filter: brightness(${sliderEffectIntesityNode.noUiSlider.get()})`;
-      });
-    }  else if (evt.target.value === ValuesImageEffects.chrome) {
-      sliderEffectIntesityNode.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-    }
+    sliderEffectIntesityNode.noUiSlider.on('update', () => {
+      imageNode.style = `filter: ${cssEffect}(${sliderEffectIntesityNode.noUiSlider.get()}${unit})`;
+    });
   });
 });
 
