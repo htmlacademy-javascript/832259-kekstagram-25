@@ -1,5 +1,6 @@
 const ValuesImageEffects = {
   chrome: {
+    csseffect: 'grayscale',
     min: 0,
     max: 1,
     start: 1,
@@ -7,6 +8,7 @@ const ValuesImageEffects = {
     unit: ''
   },
   sepia: {
+    csseffect: 'sepia',
     min: 0,
     max: 1,
     start: 1,
@@ -14,6 +16,7 @@ const ValuesImageEffects = {
     unit: ''
   },
   marvin: {
+    csseffect: 'invert',
     min: 1,
     max: 100,
     start: 100,
@@ -21,6 +24,7 @@ const ValuesImageEffects = {
     unit: '%'
   },
   phobos: {
+    csseffect: 'blur',
     min: 0,
     max: 3,
     start: 3,
@@ -28,20 +32,13 @@ const ValuesImageEffects = {
     unit: 'px'
   },
   heat: {
+    csseffect: 'brightness',
     min: 1,
     max: 3,
     start: 3,
     step: 0.1,
     unit: ''
   }
-};
-
-const CssEffectsList = {
-  chrome: 'grayscale',
-  sepia: 'sepia',
-  marvin: 'invert',
-  phobos: 'blur',
-  heat: 'brightness'
 };
 
 const changeEffectsRadioButtonNodes = document.querySelectorAll('.effects__radio');
@@ -89,7 +86,7 @@ changeEffectsRadioButtonNodes.forEach((effectsButton) => {
   effectsButton.addEventListener('change', (evt) => {
     const effect = evt.target.value;
     const effectParams = ValuesImageEffects[effect];
-    const cssEffect = CssEffectsList[effect];
+    const cssEffect = effectParams.csseffect;
 
     sliderEffectIntesityNode.noUiSlider.updateOptions({
       range: {
