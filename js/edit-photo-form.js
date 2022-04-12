@@ -6,6 +6,8 @@ const overlayModalNode = document.querySelector('.img-upload__overlay');
 const bodyNode = document.querySelector('body');
 const userCloseElementNode = document.querySelector('.img-upload__cancel');
 const formModalNode = document.querySelector('.img-upload__form');
+const imageNode = document.querySelector('.img-upload__preview');
+const sliderFieldNode = document.querySelector('.img-upload__effect-level');
 
 function openEditPhotoFormModal () {
   overlayModalNode.classList.remove('hidden');
@@ -18,7 +20,9 @@ function closeEditPhotoFormModal () {
   overlayModalNode.classList.add('hidden');
   bodyNode.classList.remove('modal-open');
   formModalNode.reset();
-
+  imageNode.style = 'filter: ``';
+  sliderFieldNode.classList.add('hidden');
+  imageNode.className = '.img-upload__preview';
   document.removeEventListener('keydown', onFormModalEscKeydown);
 }
 
@@ -37,6 +41,5 @@ formControlNode.addEventListener('keydown', (evt) => {
 });
 
 userCloseElementNode.addEventListener('click', closeEditPhotoFormModal);
-userCloseElementNode.addEventListener('keydown', closeEditPhotoFormModal);
 
 export {onFormModalEscKeydown};
