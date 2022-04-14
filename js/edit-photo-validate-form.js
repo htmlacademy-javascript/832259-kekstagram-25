@@ -1,4 +1,6 @@
 import {onFormModalEscKeydown} from './edit-photo-form.js';
+import {isEscKey} from './util.js';
+import {sendData} from './api.js';
 
 const MAX_COMMENT_SYMBOL_LENGTH = 140;
 const MAX_COUNT_HASHTAGS = 5;
@@ -6,6 +8,13 @@ const MAX_COUNT_HASHTAGS = 5;
 const formModalNode = document.querySelector('.img-upload__form');
 const textDescriptionNode = document.querySelector('.text__description');
 const hashtagsNode = document.querySelector('.text__hashtags');
+const bodyNode = document.querySelector('body');
+const successMessageTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const errorMessageTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const regular = /^#[a-zа-яё0-9]+$/i;
 
@@ -115,9 +124,82 @@ hashtagsNode.addEventListener('focusout', () => {
   document.addEventListener('keydown', onFormModalEscKeydown);
 });
 
-formModalNode.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+function closeSuccessMessage () {
+  successMessageTemplate.classList.add('hidden');
+  document.removeEventListener('keydown', onEscKeyPressSuccessDataMessage);
+}
+
+function onEscKeyPressSuccessDataMessage (evt) {
+  if (isEscKey(evt)) {
+    closeSuccessMessage();
+  }
+}
+
+function closeErrorMessage () {
+  errorMessageTemplate.classList.add('hidden');
+  document.removeEventListener('keydown', onEscKeyPressErrorDataMessage);
+}
+
+function onEscKeyPressErrorDataMessage (evt) {
+  if (isEscKey(evt)) {
+    closeErrorMessage();
+  }
+}
+
+function createSuccessSendDataMessage () {
+  successMessageTemplate.cloneNode(true);
+  const successMessage = document.createDocumentFragment();
+  const successMessageButton = successMessageTemplate.querySelector('.success__button');
 
 
+  successMessage.appendChild(successMessageTemplate);
+
+  successMessageButton.addEventListener('click', closeSuccessMessage);
+  document.addEventListener('keydown', onEscKeyPressSuccessDataMessage);
+
+  return successMessage;
+}
+
+function renderSuccessSendDataMessage () {
+  const successMessage = createSuccessSendDataMessage();
+
+  bodyNode.appendChild(successMessage);
+}
+
+function createErrorSendDataMessage () {
+  errorMessageTemplate.cloneNode(true);
+  const errorMessage = document.createDocumentFragment();
+  const errorMessageButton = errorMessageTemplate.querySelector('.error__button');
+
+  errorMessage.appendChild(errorMessageTemplate);
+
+  errorMessageButton.addEventListener('click', closeErrorMessage);
+  document.addEventListener('keydown', onEscKeyPressErrorDataMessage);
+
+  return errorMessage;
+}
+
+function renderErrorSendDataMessage () {
+  const errorMessage = createErrorSendDataMessage();
+  formModalNode.classList.add('hidden');
+
+  bodyNode.appendChild(errorMessage);
+}
+
+function setUserFormSubmit (onSuccess) {
+  formModalNode.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      sendData (
+        () => onSuccess(),
+        () => renderSuccessSendDataMessage(),
+        () => renderErrorSendDataMessage(),
+        new FormData(evt.target)
+      );
+    }
+  });
+}
+
+export {setUserFormSubmit};

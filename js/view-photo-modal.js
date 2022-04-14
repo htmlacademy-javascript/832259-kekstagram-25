@@ -18,7 +18,6 @@ const commentsCountPerPage = 5;
 
 function renderMoreComments () {
   commentsCurrentPage++;
-
   const shift = commentsCurrentPage * commentsCountPerPage;
   const comments = currentPhoto.comments.slice(shift, shift + commentsCountPerPage);
   countCommentsPerPageNode.textContent = comments.length+=shift;
@@ -49,8 +48,7 @@ function renderMoreComments () {
 }
 
 function hideLoadMoreComments () {
-  const maxPages = Math.ceil(currentPhoto.comments.length / commentsCountPerPage);
-
+  const maxPages = Math.floor(currentPhoto.comments.length / commentsCountPerPage);
   if (commentsCurrentPage >= maxPages) {
     loadMoreCommentsNode.classList.add('hidden');
   } else {

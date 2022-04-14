@@ -1,48 +1,4 @@
-function getRandomInt (min, max) {
-  if(max < min || max === min) {
-    throw new Error('Данное зачение использоваться не может.');
-  }
-
-  if (min < -1) {
-    throw new Error('Значение не может быть меньше 0.');
-  }
-
-  const rand = min + Math.random() * (max - min);
-
-  return Math.round(rand);
-}
-
-function getNonRepeatingInt (min, max) {
-  if(getNonRepeatingInt.values === undefined) {
-    getNonRepeatingInt.values = [];
-  }
-
-  let result;
-
-  for (let i = 0; i <= 50; i++) {
-    result = getRandomInt(min, max);
-
-    if(!getNonRepeatingInt.values.includes(result)) {
-      getNonRepeatingInt.values.push(result);
-      return result;
-    }
-  }
-
-  throw new Error ('Не удалось сгенерировать число');
-}
-
-function getRandomArrayElement (array) {
-  const random = Math.floor(Math.random() * array.length);
-  return array[random];
-}
-
-function checkStringLength (str, length) {
-  if(str.length <= length) {
-    return true;
-  }
-
-  return false;
-}
+const ALERT_SHOW_TIME = 5000;
 
 function isEnterKey (evt) {
   return evt.key === 'Enter';
@@ -52,11 +8,28 @@ function isEscKey (evt) {
   return evt.key === 'Escape';
 }
 
+function showAlert (message)  {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
 
-export {getRandomInt};
-export {getNonRepeatingInt};
-export {getRandomArrayElement};
-export {checkStringLength};
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
 export {isEnterKey};
 export {isEscKey};
+export {showAlert};
 
