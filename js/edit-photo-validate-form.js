@@ -125,7 +125,9 @@ hashtagsNode.addEventListener('focusout', () => {
 });
 
 function closeSuccessMessage () {
-  successMessageTemplate.classList.add('hidden');
+  const successModalNode = document.querySelector('.success');
+  successModalNode.classList.add('hidden');
+
   document.removeEventListener('keydown', onEscKeyPressSuccessDataMessage);
 }
 
@@ -136,7 +138,8 @@ function onEscKeyPressSuccessDataMessage (evt) {
 }
 
 function closeErrorMessage () {
-  errorMessageTemplate.classList.add('hidden');
+  const errorModalNode = document.querySelector('.error');
+  errorModalNode.classList.add('hidden');
   document.removeEventListener('keydown', onEscKeyPressErrorDataMessage);
 }
 
@@ -150,10 +153,6 @@ function createSuccessSendDataMessage () {
   successMessageTemplate.cloneNode(true);
   const successMessage = document.createDocumentFragment();
   const successMessageButton = successMessageTemplate.querySelector('.success__button');
-
-  if (successMessageTemplate.classList.contains('hidden')) {
-    successMessageTemplate.classList.remove('hidden');
-  }
 
   successMessage.appendChild(successMessageTemplate);
 

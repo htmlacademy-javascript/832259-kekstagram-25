@@ -11,8 +11,7 @@ function sendData (onSuccess, onSuccessMessageFunction, onFailMessageFunction, b
   fetch('https://25.javascript.pages.academy/kekstagram', {
     method: 'POST',
     body
-  }
-  )
+  })
     .then((response) => {
       if (response.ok) {
         onSuccess();
