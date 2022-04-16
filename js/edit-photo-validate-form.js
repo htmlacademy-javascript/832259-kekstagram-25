@@ -151,6 +151,9 @@ function createSuccessSendDataMessage () {
   const successMessage = document.createDocumentFragment();
   const successMessageButton = successMessageTemplate.querySelector('.success__button');
 
+  if (successMessageTemplate.classList.contains('hidden')) {
+    successMessageTemplate.classList.remove('hidden');
+  }
 
   successMessage.appendChild(successMessageTemplate);
 
@@ -170,6 +173,10 @@ function createErrorSendDataMessage () {
   errorMessageTemplate.cloneNode(true);
   const errorMessage = document.createDocumentFragment();
   const errorMessageButton = errorMessageTemplate.querySelector('.error__button');
+
+  if (errorMessageTemplate.classList.contains('hidden')) {
+    errorMessageTemplate.classList.remove('hidden');
+  }
 
   errorMessage.appendChild(errorMessageTemplate);
 

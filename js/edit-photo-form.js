@@ -12,7 +12,6 @@ const editableImageNode = imageNode.querySelector('img');
 function openEditPhotoFormModal () {
   overlayModalNode.classList.remove('hidden');
   bodyNode.classList.add('modal-open');
-
   document.addEventListener('keydown', onFormModalEscKeydown);
 }
 
@@ -21,9 +20,9 @@ function closeEditPhotoFormModal () {
   bodyNode.classList.remove('modal-open');
   formModalNode.reset();
   imageNode.style = 'filter: ``';
+  formControlNode.value = '';
   editableImageNode.style = 'transform: scale(1)';
   sliderFieldNode.classList.add('hidden');
-  imageNode.className = '.img-upload__preview';
   document.removeEventListener('keydown', onFormModalEscKeydown);
 }
 

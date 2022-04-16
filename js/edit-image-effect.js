@@ -47,28 +47,16 @@ const sliderEffectIntesityNode = document.querySelector('.effect-level__slider')
 const sliderFieldNode = document.querySelector('.img-upload__effect-level');
 sliderFieldNode.classList.add('hidden');
 
-let currentEffect = 'effects__preview--none';
-
 changeEffectsRadioButtonNodes.forEach((button) => {
   button.addEventListener('change', (evt) => {
-    if (currentEffect) {
-      imageNode.classList.remove(currentEffect);
-    }
+    sliderEffectIntesityNode.classList.remove('hidden');
+    sliderFieldNode.classList.remove('hidden');
 
-    currentEffect = `effects__preview--${evt.target.value}`;
-
-    if (currentEffect === 'effects__preview--none') {
+    if (evt.target.value === 'none') {
       sliderEffectIntesityNode.classList.add('hidden');
       sliderFieldNode.classList.add('hidden');
       imageNode.style = 'filter: ``';
     }
-
-    if (currentEffect !== 'effects__preview--none') {
-      sliderEffectIntesityNode.classList.remove('hidden');
-      sliderFieldNode.classList.remove('hidden');
-    }
-
-    imageNode.classList.add(currentEffect);
   });
 });
 
