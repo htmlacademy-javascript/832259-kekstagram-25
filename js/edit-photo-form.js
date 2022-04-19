@@ -1,5 +1,7 @@
 import {isEscKey} from './util.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const formControlNode = document.querySelector('#upload-file');
 const overlayModalNode = document.querySelector('.img-upload__overlay');
 const bodyNode = document.querySelector('body');
@@ -10,6 +12,13 @@ const sliderFieldNode = document.querySelector('.img-upload__effect-level');
 const editableImageNode = imageNode.querySelector('img');
 
 function openEditPhotoFormModal () {
+  const file = formControlNode.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    editableImageNode.src = URL.createObjectURL(file);
+  }
+
   overlayModalNode.classList.remove('hidden');
   bodyNode.classList.add('modal-open');
   document.addEventListener('keydown', onFormModalEscKeydown);
