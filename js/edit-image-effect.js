@@ -17,7 +17,7 @@ const ValuesImageEffects = {
   },
   marvin: {
     csseffect: 'invert',
-    min: 1,
+    min: 0,
     max: 100,
     start: 100,
     step: 1,
@@ -43,6 +43,7 @@ const ValuesImageEffects = {
 
 const changeEffectsRadioButtonNodes = document.querySelectorAll('.effects__radio');
 const imageNode = document.querySelector('.img-upload__preview');
+const fullSizeImageNode = imageNode.querySelector('img');
 const sliderEffectIntesityNode = document.querySelector('.effect-level__slider');
 const sliderFieldNode = document.querySelector('.img-upload__effect-level');
 sliderFieldNode.classList.add('hidden');
@@ -74,14 +75,14 @@ function changeSaturationEffectSlider (evt) {
   const unit = effectParams.unit;
 
   sliderEffectIntesityNode.noUiSlider.on('update', () => {
-    imageNode.style = `filter: ${cssEffect}(${sliderEffectIntesityNode.noUiSlider.get()}${unit})`;
+    fullSizeImageNode.style.filter = `${cssEffect}(${sliderEffectIntesityNode.noUiSlider.get()}${unit})`;
   });
 }
 
 function hideSliderScale () {
   sliderEffectIntesityNode.classList.add('hidden');
   sliderFieldNode.classList.add('hidden');
-  imageNode.style = 'filter: ``';
+  fullSizeImageNode.style.filter = '';
 }
 
 function onEffectSelect (evt) {

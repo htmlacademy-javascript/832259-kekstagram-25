@@ -14,7 +14,7 @@ function zoomOutImage () {
     imageScaleValueNode.value = `${MIN_IMAGE_SCALE_VALUE}%`;
   }
 
-  editableImageNode.style = `transform: scale(${parseInt(imageScaleValueNode.value, 10) / 100})`;
+  editableImageNode.style.transform = `scale(${parseInt(imageScaleValueNode.value, 10) / 100})`;
 }
 
 function zoomInImage () {

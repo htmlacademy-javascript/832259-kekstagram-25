@@ -6,6 +6,7 @@ const pictureNode = document.querySelector('.pictures');
 const pictureTemplateNode = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+const filterNode = document.querySelector('.img-filters');
 
 function addClickHandler (previewTemplate, photo) {
   previewTemplate.addEventListener('click', (evt) => {
@@ -44,11 +45,17 @@ function createPhotoPreview (photo) {
 
 function renderPhotoPreview (photos) {
   const photosFragment = document.createDocumentFragment();
+  filterNode.classList.remove('img-filters--inactive');
 
   photos.forEach((photo) => {
     const photoNode = createPhotoPreview(photo);
     photosFragment.appendChild(photoNode);
   });
+
+  const userPicturesElement = pictureNode.querySelectorAll('.picture');
+  for (const pictures of userPicturesElement) {
+    pictures.remove();
+  }
 
   pictureNode.appendChild(photosFragment);
 }

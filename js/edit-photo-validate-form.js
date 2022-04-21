@@ -8,13 +8,29 @@ const MAX_COUNT_HASHTAGS = 5;
 const formModalNode = document.querySelector('.img-upload__form');
 const textDescriptionNode = document.querySelector('.text__description');
 const hashtagsNode = document.querySelector('.text__hashtags');
-const bodyNode = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
 const errorMessageTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
+const loadingMessageTemplate = document.querySelector('#messages')
+  .content
+  .querySelector('.img-upload__message');
+
+const successModal = successMessageTemplate.cloneNode(true);
+const errorModal = errorMessageTemplate.cloneNode(true);
+const loadingMessageModal = loadingMessageTemplate.cloneNode(true);
+
+successModal.classList.add('hidden');
+errorModal.classList.add('hidden');
+loadingMessageModal.classList.add('hidden');
+
+const submitButton = document.querySelector('.img-upload__submit');
+
+document.body.appendChild(successModal);
+document.body.appendChild(errorModal);
+document.body.appendChild(loadingMessageModal);
 
 const regular = /^#[a-zа-яё0-9]+$/i;
 
@@ -124,72 +140,63 @@ hashtagsNode.addEventListener('focusout', () => {
   document.addEventListener('keydown', onFormModalEscKeydown);
 });
 
-function closeSuccessMessage () {
-  const successModalNode = document.querySelector('.success');
-  successModalNode.classList.add('hidden');
+successModal.addEventListener('click', closeSuccessModal);
 
-  document.removeEventListener('keydown', onEscKeyPressSuccessDataMessage);
-}
+function closeSuccessModal (evt) {
+  const isClickByButton = evt.target.classList.contains('success__button');
+  const isClickByOuter = evt.target.classList.contains('success');
 
-function onEscKeyPressSuccessDataMessage (evt) {
-  if (isEscKey(evt)) {
-    closeSuccessMessage();
+  if (isClickByButton || isClickByOuter || isEscKey(evt)) {
+    successModal.classList.add('hidden');
+    document.removeEventListener('keydown', isEscKeyPressCloseSuccessModal);
   }
 }
 
-function closeErrorMessage () {
-  const errorModalNode = document.querySelector('.error');
-  errorModalNode.classList.add('hidden');
-  document.removeEventListener('keydown', onEscKeyPressErrorDataMessage);
-}
-
-function onEscKeyPressErrorDataMessage (evt) {
+function isEscKeyPressCloseSuccessModal (evt) {
   if (isEscKey(evt)) {
-    closeErrorMessage();
+    closeSuccessModal(evt);
   }
-}
-
-function createSuccessSendDataMessage () {
-  successMessageTemplate.cloneNode(true);
-  const successMessage = document.createDocumentFragment();
-  const successMessageButton = successMessageTemplate.querySelector('.success__button');
-
-  successMessage.appendChild(successMessageTemplate);
-
-  successMessageButton.addEventListener('click', closeSuccessMessage);
-  document.addEventListener('keydown', onEscKeyPressSuccessDataMessage);
-
-  return successMessage;
 }
 
 function renderSuccessSendDataMessage () {
-  const successMessage = createSuccessSendDataMessage();
+  successModal.classList.remove('hidden');
 
-  bodyNode.appendChild(successMessage);
+  document.addEventListener('keydown', isEscKeyPressCloseSuccessModal);
 }
 
-function createErrorSendDataMessage () {
-  errorMessageTemplate.cloneNode(true);
-  const errorMessage = document.createDocumentFragment();
-  const errorMessageButton = errorMessageTemplate.querySelector('.error__button');
 
-  if (errorMessageTemplate.classList.contains('hidden')) {
-    errorMessageTemplate.classList.remove('hidden');
+function blockSubmitButton  () {
+  submitButton.disabled = true;
+  loadingMessageModal.classList.remove('hidden');
+}
+
+function unblockSubmitButton () {
+  submitButton.disabled = false;
+  loadingMessageModal.classList.add('hidden');
+}
+
+errorModal.addEventListener('click', closeErrorModal);
+
+function closeErrorModal (evt) {
+  const isClickByButton = evt.target.classList.contains('error__button');
+  const isClickByOuter = evt.target.classList.contains('error');
+
+  if (isClickByButton || isClickByOuter || isEscKey(evt)) {
+    errorModal.classList.add('hidden');
+    document.removeEventListener('keydown', isEscKeyPressCloseErrorModal);
   }
+}
 
-  errorMessage.appendChild(errorMessageTemplate);
-
-  errorMessageButton.addEventListener('click', closeErrorMessage);
-  document.addEventListener('keydown', onEscKeyPressErrorDataMessage);
-
-  return errorMessage;
+function isEscKeyPressCloseErrorModal (evt) {
+  if (isEscKey(evt)) {
+    closeSuccessModal(evt);
+  }
 }
 
 function renderErrorSendDataMessage () {
-  const errorMessage = createErrorSendDataMessage();
-  formModalNode.classList.add('hidden');
+  errorModal.classList.remove('hidden');
 
-  bodyNode.appendChild(errorMessage);
+  document.addEventListener('keydown', isEscKeyPressCloseErrorModal);
 }
 
 function setUserFormSubmit (onSuccess) {
@@ -198,10 +205,12 @@ function setUserFormSubmit (onSuccess) {
     const isValid = pristine.validate();
 
     if (isValid) {
+      blockSubmitButton();
       sendData (
         () => onSuccess(),
         () => renderSuccessSendDataMessage(),
         () => renderErrorSendDataMessage(),
+        () => unblockSubmitButton(),
         new FormData(evt.target)
       );
     }
