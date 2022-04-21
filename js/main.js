@@ -3,7 +3,7 @@ import {closeEditPhotoFormModal} from './edit-photo-form.js';
 import {setUserFormSubmit} from './edit-photo-validate-form.js';
 import {getData} from './api.js';
 import {debounce} from './util.js';
-import {setButtonsContainerClick} from './filters.js';
+import {clickOnFilterButton} from './filters.js';
 import './edit-photo-form.js';
 import './edit-photo-validate-form.js';
 import './edit-image-scale.js';
@@ -13,7 +13,7 @@ const RERENDER_DELAY = 500;
 
 getData((photos) => {
   renderPhotoPreview(photos);
-  setButtonsContainerClick(debounce(
+  clickOnFilterButton(debounce(
     (sortedData) => renderPhotoPreview(sortedData),
     RERENDER_DELAY,
   ), photos);

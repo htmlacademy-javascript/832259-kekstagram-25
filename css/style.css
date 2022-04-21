@@ -682,6 +682,14 @@ main {
   border: none;
 }
 
+.text--hashtags {
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+  border: none;
+}
+
 .text__hashtags {
   width: 450px;
 

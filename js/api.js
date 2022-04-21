@@ -1,5 +1,6 @@
 import {showAlert} from './util.js';
 import {userFiltersElement} from './filters.js';
+import {closeEditPhotoFormModal} from './edit-photo-form.js';
 
 function getData (onSuccess) {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
@@ -11,7 +12,7 @@ function getData (onSuccess) {
     .catch(() => showAlert('Данные не загружены, обновите страницу!'));
 }
 
-function sendData (onSuccess, onSuccessMessageFunction, onLoadMessageFunction, onFailMessageFunction, body) {
+function sendData (onSuccess, onSuccessMessageFunction, onFailMessageFunction, onLoadMessageFunction, body) {
   fetch('https://25.javascript.pages.academy/kekstagram', {
     method: 'POST',
     body
@@ -20,14 +21,16 @@ function sendData (onSuccess, onSuccessMessageFunction, onLoadMessageFunction, o
       if (response.ok) {
         onSuccess();
         onSuccessMessageFunction();
-        onLoadMessageFunction();
       } else {
         onFailMessageFunction();
-        onLoadMessageFunction();
+        closeEditPhotoFormModal();
       }
     })
     .catch(() => {
       onFailMessageFunction();
+      closeEditPhotoFormModal();
+    })
+    .finally(() => {
       onLoadMessageFunction();
     });
 }

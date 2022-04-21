@@ -20,15 +20,17 @@ const loadingMessageTemplate = document.querySelector('#messages')
 
 const successModal = successMessageTemplate.cloneNode(true);
 const errorModal = errorMessageTemplate.cloneNode(true);
-const loadingMessage = loadingMessageTemplate.cloneNode(true);
+const loadingMessageModal = loadingMessageTemplate.cloneNode(true);
 
 successModal.classList.add('hidden');
 errorModal.classList.add('hidden');
+loadingMessageModal.classList.add('hidden');
 
 const submitButton = document.querySelector('.img-upload__submit');
 
 document.body.appendChild(successModal);
 document.body.appendChild(errorModal);
+document.body.appendChild(loadingMessageModal);
 
 const regular = /^#[a-zа-яё0-9]+$/i;
 
@@ -165,13 +167,12 @@ function renderSuccessSendDataMessage () {
 
 function blockSubmitButton  () {
   submitButton.disabled = true;
-  document.body.appendChild(loadingMessage);
+  loadingMessageModal.classList.remove('hidden');
 }
 
 function unblockSubmitButton () {
   submitButton.disabled = false;
-  const loadMessageNode = document.querySelector('.img-upload__message');
-  loadMessageNode.classList.add('hidden');
+  loadingMessageModal.classList.add('hidden');
 }
 
 errorModal.addEventListener('click', closeErrorModal);
@@ -207,9 +208,9 @@ function setUserFormSubmit (onSuccess) {
       blockSubmitButton();
       sendData (
         () => onSuccess(),
-        () => unblockSubmitButton(),
         () => renderSuccessSendDataMessage(),
         () => renderErrorSendDataMessage(),
+        () => unblockSubmitButton(),
         new FormData(evt.target)
       );
     }

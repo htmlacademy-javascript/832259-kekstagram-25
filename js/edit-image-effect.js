@@ -75,13 +75,14 @@ function changeSaturationEffectSlider (evt) {
   const unit = effectParams.unit;
 
   sliderEffectIntesityNode.noUiSlider.on('update', () => {
-    fullSizeImageNode.style.filter = `${cssEffect}(${sliderEffectIntesityNode.noUiSlider.get()}${unit})`;  });
+    fullSizeImageNode.style.filter = `${cssEffect}(${sliderEffectIntesityNode.noUiSlider.get()}${unit})`;
+  });
 }
 
 function hideSliderScale () {
   sliderEffectIntesityNode.classList.add('hidden');
   sliderFieldNode.classList.add('hidden');
-  fullSizeImageNode.style = 'filter: ``';
+  fullSizeImageNode.style.filter = '';
 }
 
 function onEffectSelect (evt) {

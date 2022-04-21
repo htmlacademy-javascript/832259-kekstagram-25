@@ -14,13 +14,12 @@ const editableImageNode = imageNode.querySelector('img');
 function openEditPhotoFormModal () {
   const file = formControlNode.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((extension) => fileName.endsWith(extension));
   if (matches) {
     editableImageNode.src = URL.createObjectURL(file);
+    overlayModalNode.classList.remove('hidden');
+    bodyNode.classList.add('modal-open');
   }
-
-  overlayModalNode.classList.remove('hidden');
-  bodyNode.classList.add('modal-open');
   document.addEventListener('keydown', onFormModalEscKeydown);
 }
 
